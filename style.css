@@ -452,4 +452,73 @@ footer .copyright a:hover {
   justify-content: flex-end;
 }
 
+/* contact us */
+
+#contact-us {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #f8f8f8;
+}
+
+#contact-us p {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.6;
+}
+
+#contact-us ul {
+  list-style-type: none;
+}
+
+#contact-us ul li {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #1d1d1d;
+  padding: 8px 0;
+  line-height: 1.6;
+}
+
+#contact-us ul li strong {
+  font-weight: 600;
+}
+
+#contact-us .form-group {
+  margin-bottom: 20px;
+}
+
+#contact-us .form-group label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#contact-us .form-group input, 
+#contact-us .form-group textarea {
+  font-size: 1rem;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 991px) {
+  #contact-us h2 {
+      font-size: 2rem;
+  }
+
+  #contact-us p, 
+  #contact-us ul li {
+      font-size: 0.9rem;
+  }
+
+  #contact-us .form-group input,
+  #contact-us .form-group textarea {
+      font-size: 0.9rem;
+  }
+}
+
+
+
+
+
 
