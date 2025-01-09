@@ -419,6 +419,11 @@
 
         console.log(`Current Page: ${currentPage}`);
 
+        // Remove the active class from all pagination items
+        document.querySelectorAll('.pagination .page-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
         // Update the active page number
         const activePageElement = document.getElementById(`page${currentPage}`);
         if (activePageElement) {
