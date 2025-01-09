@@ -52,7 +52,7 @@
                     <a class="nav-link" href="index.html">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="shop.html">Shop</a>
+                    <a class="nav-link active" href="shop1.html">Shop</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="blog.html">Blog</a>
@@ -298,22 +298,37 @@
                 <h4 class="p-price">RM 90.00</h4>
                 <button class="buy-btn">Buy Now</button>
               </div>
-              <nav aria-label="...">
-                <ul class="pagination mt-5">
-                  <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <!-- Previous Page Button -->
+                  <li class="page-item" id="prevPage">
+                      <a class="page-link" href="#" tabindex="-1">Previous</a>
                   </li>
-                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item" aria-current="page">
-                    <a class="page-link" href="#">2</a>
+              
+                  <!-- Page 1 -->
+                  <li class="page-item active" id="page1">
+                      <a class="page-link" href="shop1.html">1</a>
                   </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+              
+                  <!-- Page 2 -->
+                  <li class="page-item" id="page2">
+                      <a class="page-link" href="shop2.html">2</a>
+                  </li>
+              
+                  <!-- Page 3 -->
+                  <li class="page-item" id="page3">
+                      <a class="page-link" href="shop3.html">3</a>
+                  </li>
+              
+                  <!-- Next Page Button -->
+                  <li class="page-item" id="nextPage">
+                      <a class="page-link" href="#">Next</a>
                   </li>
                 </ul>
               </nav>
-            </div>
+            
+          </div>
           </section>
 
           <footer class="mt-5 py-5">
@@ -394,5 +409,33 @@
             integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
             crossorigin="anonymous"></script>
     </body>
+
+    <script>
+        // Set the current page number in localStorage
+        localStorage.setItem('currentPage', 1);
+
+        // Get the current page number from localStorage
+        const currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
+
+        console.log(`Current Page: ${currentPage}`);
+
+        // Update the active page number
+        const activePageElement = document.getElementById(`page${currentPage}`);
+        if (activePageElement) {
+            activePageElement.classList.add('active');
+        } else {
+            console.error(`Element with ID page${currentPage} not found.`);
+        }
+
+        // Update the previous and next page links
+        const prevPageLink = document.getElementById('prevPage').querySelector('a');
+        const nextPageLink = document.getElementById('nextPage').querySelector('a');
+
+        prevPageLink.href = `shop${currentPage - 1}.html`;
+        nextPageLink.href = `shop${currentPage + 1}.html`;
+
+        console.log(`Previous Page Link: ${prevPageLink.href}`);
+        console.log(`Next Page Link: ${nextPageLink.href}`);
+    </script>
 
 </html>
