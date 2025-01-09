@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Products with Categories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <h1>Featured Products</h1>
+  <div id="featured">
+    <div class="row mx-auto container-fluid"></div>
+  </div>
+
+  <h1>Clothes</h1>
+  <div id="clothProducts">
+    <div class="row mx-auto container-fluid"></div>
+  </div>
+
+  <script>
+    // Initialize categorized products in local storage
+    if (!localStorage.getItem('products')) {
+      const products = {
+        featured: [
+          {
+            image: 'img/featured/1.jpg',
+            name: 'Sport Shoes',
+            price: 'RM 90.00',
+            rating: 5,
+          },
+          {
+            image: 'img/featured/2.jpg',
+            name: 'Running Shoes',
+            price: 'RM 100.00',
+            rating: 4,
+          },
+        ],
+        cloth: [
+          {
+            image: 'img/clothes/3.jpg',
+            name: 'Strippy Shirt',
+            price: 'RM 20.00',
+            rating: 5,
+          },
+          {
+            image: 'img/clothes/2.jpg',
+            name: 'Casual Shirt',
+            price: 'RM 25.00',
+            rating: 4,
+          },
+        ],
+      };
+      localStorage.setItem('products', JSON.stringify(products));
+    }
+
+    const products = JSON.parse(localStorage.getItem('products'));
+
+    // Function to render products
+    function renderProducts(category, containerId) {
+      const productContainer = document.getElementById(containerId).querySelector('.row');
+      products[category].forEach((product, index) => {
+        const stars = Array(product.rating).fill('<i class="fas fa-star"></i>').join('');
+        const productHTML = `
+          <div class="product text-center col-lg-3 col-md-4 col-12">
+            <img class="img-fluid mb-3" src="${product.image}" alt="${product.name}">
+            <div class="star">${stars}</div>
+            <h5 class="p-name">${product.name}</h5>
+            <h4 class="p-price">${product.price}</h4>
+            <button class="buy-btn" onclick="viewProductDetails('${category}', ${index})">Buy Now</button>
+          </div>`;
+        productContainer.insertAdjacentHTML('beforeend', productHTML);
+      });
+    }
+
+    // Render featured and cloth products
+    renderProducts('featured', 'featured');
+    renderProducts('cloth', 'clothProducts');
+
+    // Handle Buy Now button click
+    function viewProductDetails(category, index) {
+      const selectedProduct = products[category][index];
+      localStorage.setItem('selectedProduct', JSON.stringify(selectedProduct));
+      window.location.href = 'product-details.html';
+    }
+  </script>
+</body>
+</html>
