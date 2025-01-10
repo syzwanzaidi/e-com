@@ -16,27 +16,6 @@
 
         <!-- Alpine Js -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-        <style>
-          .cart-table th,
-          .cart-table td {
-            text-align: center;
-            vertical-align: middle;
-          }
-      
-          .cart-table img {
-            max-width: 80px;
-          }
-      
-          .cart-table .remove-btn {
-            color: red;
-            cursor: pointer;
-          }
-      
-          .cart-summary {
-            text-align: right;
-          }
-        </style>
     </head>
 
     <body>
@@ -80,24 +59,55 @@
         </section>
 
         <!-- Table -->
-        <div class="container mt-5">
-          <table class="table table-bordered cart-table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Image</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Size</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-                <th scope="col">Remove</th>
-              </tr>
-            </thead>
-            <tbody id="cartTableBody">
-              <!-- Cart items will be dynamically added here -->
-            </tbody>
-          </table>
-        </div>
+         <section id="cart-container" class="container my-5">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Remove</td>
+                        <td>Image</td>
+                        <td>Product</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><img src="img/shoes/1.jpg" alt=""></td>
+                        <td>
+                            <h5>Adidas Superstar</h5>
+                        </td>
+                        <td><h5>RM 5</h5></td>
+                        <td><input class="w-25 pl-1" value="1" type="number"></td>
+                        <td><h5>RM 500</h5></td>
+                    </tr>
+
+                    <tr>
+                        <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><img src="img/shoes/2.jpg" alt=""></td>
+                        <td>
+                            <h5>Adidas Superstar</h5>
+                        </td>
+                        <td><h5>RM 5</h5></td>
+                        <td><input class="w-25 pl-1" value="1" type="number"></td>
+                        <td><h5>RM 500</h5></td>
+                    </tr>
+
+                    <tr>
+                        <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><img src="img/shoes/3.jpg" alt=""></td>
+                        <td>
+                            <h5>Adidas Superstar</h5>
+                        </td>
+                        <td><h5>RM 5</h5></td>
+                        <td><input class="w-25 pl-1" value="1" type="number"></td>
+                        <td><h5>RM 500</h5></td>
+                    </tr>
+                </tbody>
+            </table>
+         </section>
 
          <section id="cart-bottom" class="container">
             <div class="row">
@@ -113,11 +123,21 @@
                 <div class="total col-lg-6 col-md-6 col-12">
                     <div>
                         <h5>CART TOTAL</h5>
-                        <div class="cart-summary d-flex justify-content-between">
-                          <h6>Total</h6>
-                          <p><span id="cartTotal">RM 0.00</span></p>
+                        <div class="d-flex justify-content-between">
+                            <h6>Subtotal</h6>
+                            <p>RM 1</p>
                         </div>
-                        
+                        <div class="d-flex justify-content-between">
+                            <h6>Shipping</h6>
+                            <p>RM 1</p>
+                        </div>
+
+                        <hr class="second-hr">
+
+                        <div class="d-flex justify-content-between">
+                            <h6>Total</h6>
+                            <p>RM 1</p>
+                        </div>
                         <button class="ml-auto">PROCEED TO CHECKOUT</button>
                     </div>
                 </div>
@@ -201,80 +221,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" 
             crossorigin="anonymous"></script>
-
-        <script>
-          // Function to load cart items from localStorage
-          function loadCart() {
-            const cartTableBody = document.getElementById('cartTableBody');
-            const cartTotal = document.getElementById('cartTotal');
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let total = 0;
-      
-            cartTableBody.innerHTML = ''; // Clear the table
-      
-            cart.forEach((item, index) => {
-              const row = document.createElement('tr');
-              const totalItemPrice = parseFloat(item.price.replace('RM', '').trim()) * item.quantity;
-              total += totalItemPrice;
-      
-              row.innerHTML = `
-                <td><img src="${item.image}" alt="Product Image"></td>
-                <td>${item.name}</td>
-                <td>${item.price}</td>
-                <td>${item.size}</td>
-                <td>
-                  <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-index="${index}">
-                </td>
-                <td class="item-total">RM ${totalItemPrice.toFixed(2)}</td>
-                <td><span class="remove-btn" data-index="${index}">Remove</span></td>
-              `;
-              cartTableBody.appendChild(row);
-            });
-      
-            cartTotal.textContent = `RM ${total.toFixed(2)}`;
-      
-            // Add event listeners for remove buttons
-            document.querySelectorAll('.remove-btn').forEach(button => {
-              button.addEventListener('click', function () {
-                const index = this.getAttribute('data-index');
-                removeFromCart(index);
-              });
-            });
-      
-            // Add event listeners for quantity inputs
-            document.querySelectorAll('.quantity-input').forEach(input => {
-              input.addEventListener('change', function () {
-                const index = this.getAttribute('data-index');
-                const newQuantity = parseInt(this.value);
-                if (newQuantity > 0) {
-                  updateQuantity(index, newQuantity);
-                } else {
-                  alert('Quantity must be at least 1');
-                  this.value = 1;
-                }
-              });
-            });
-          }
-      
-          // Function to remove an item from the cart
-          function removeFromCart(index) {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.splice(index, 1); // Remove the item
-            localStorage.setItem('cart', JSON.stringify(cart)); // Update the cart in localStorage
-            loadCart(); // Reload the cart table
-          }
-      
-          // Function to update the quantity of an item
-          function updateQuantity(index, newQuantity) {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart[index].quantity = newQuantity; // Update the quantity
-            localStorage.setItem('cart', JSON.stringify(cart)); // Save changes to localStorage
-            loadCart(); // Reload the cart table
-          }
-      
-          // Load the cart on page load
-          loadCart();
-        </script>
     </body>
 
 </html>
