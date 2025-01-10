@@ -14,6 +14,8 @@
 
         <link rel="stylesheet" href="style.css">
 
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
         <style>
             .product img{
                 width: 100%;
@@ -63,22 +65,34 @@
                   <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact Us</a>
                   </li>
+
                   <li class="nav-item">
-                    <i class="fal fa-search"></i>
+                    <!-- Search form -->
+                    <div x-data="{ open: false, search: '' }" class="d-flex ml-auto align-items-center search-container">
+                      <i @click="open = !open" class="fal fa-search" style="cursor: pointer;"></i>
+                      <div x-show="open" class="search-popup ml-2" x-transition.duration.500ms>
+                          <input x-model="search" type="text" class="form-control mt-2" placeholder="Search...">
+                          <button @click="performSearch" class="btn mt-1">Search</button>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="nav-item ml-2">
                     <i class="fal fa-shopping-bag"></i>
                   </li>
+
               </div>
             </div>
           </nav>
 
-          <section id="featured" class="my-5 py-5">
+          <section id="featured" class="my-5 py-5" x-data="productSearch()">
             <div class="container mt-5 py-5">
               <h2 class="font-weight-bold">Our Featured</h2>
               <hr>
               <p>Here you can check out our new products with fair price on rymo.</p>
             </div>
-            <div class="row mx-auto container">
-              <div onclick="window.location.href='sproduct.html';" class="product text-center col-lg-3 col-md-4 col-12 text-center">
+            <div class="row mx-auto container" id="product-list">
+              <!-- <div onclick="window.location.href='sproduct.html';" class="product text-center col-lg-3 col-md-4 col-12 text-center" x-show="matchesSearch('Sport Shoes')">
                 <img class="img-fluid mb-3" src="img/featured/1.jpg" alt="">
                 <div class="star">
                   <i class="fas fa-star"></i>
@@ -92,7 +106,7 @@
                 <button class="buy-btn">Buy Now</button>
               </div>
   
-              <div class="product text-center col-lg-3 col-md-4 col-12">
+              <div class="product text-center col-lg-3 col-md-4 col-12" x-show="matchesSearch('Converse Shoes')">
                 <img class="img-fluid mb-3" src="img/featured/2.jpg" alt="">
                 <div class="star">
                   <i class="fas fa-star"></i>
@@ -101,8 +115,8 @@
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                 </div>
-                <h5 class="p-name">Sport Shoes</h5>
-                <h4 class="p-price">RM 90.00</h4>
+                <h5 class="p-name">Converse Shoes</h5>
+                <h4 class="p-price">RM 120.00</h4>
                 <button class="buy-btn">Buy Now</button>
               </div>
   
@@ -296,7 +310,7 @@
                 </div>
                 <h5 class="p-name">Sport Shoes</h5>
                 <h4 class="p-price">RM 90.00</h4>
-                <button class="buy-btn">Buy Now</button>
+                <button class="buy-btn">Buy Now</button> -->
               </div>
 
               <nav aria-label="Page navigation example">
@@ -410,6 +424,7 @@
             crossorigin="anonymous"></script>
     </body>
 
+    <!--Page navigation logic-->
     <script>
         // Set the current page number in localStorage
         localStorage.setItem('currentPage', 1);
@@ -441,6 +456,72 @@
 
         console.log(`Previous Page Link: ${prevPageLink.href}`);
         console.log(`Next Page Link: ${nextPageLink.href}`);
+    </script>
+
+    <script>
+        // Function to search for products
+        function productSearch() {
+            return {
+                search: '',
+                performSearch() {
+                    const searchQuery = this.search.toLowerCase();
+                    console.log('Searching for:', searchQuery);
+                    // Implement your search logic here
+                },
+                matchesSearch(productName) {
+                    return productName.toLowerCase().includes(this.search.toLowerCase());
+                }
+            }
+        }
+    </script>
+
+    <script>
+      // Store product data in localStorage
+      const products = [
+            { name: 'Water Force', price: 'RM 90.00', image: 'img/featured/1.jpg' },
+            { name: 'Converes Shoes', price: 'RM 120.00', image: 'img/featured/2.jpg' },
+            { name: 'Black Pumba', price: 'RM 100.00', image: 'img/shoes/4.jpg' },
+            { name: 'Timberlake', price: 'RM 250.00', image: 'img/shoes/7.jpg' },
+            { name: 'SGV', price: 'RM 500.00', image: 'img/shop/19.jpg' },
+            { name: 'The simpsony', price: 'RM 9.00', image: 'img/shop/18.jpg' },
+            { name: 'Deor', price: 'RM 1000.00', image: 'img/shop/3.jpg' },
+            { name: 'Unicolo Binie', price: 'RM 10.00', image: 'img/shop/5.jpg' },
+            { name: 'Unicolo Sweater', price: 'RM 90.00', image: 'img/shop/6.jpg' },
+            { name: 'Zarah Shoes', price: 'RM 190.00', image: 'img/shop/7.jpg' },
+            { name: 'Stoned Iceland Jacket', price: 'RM 7000.00', image: 'img/shop/8.jpg' },
+            { name: 'Naik Goretex', price: 'RM 900.00', image: 'img/shop/9.jpg' },
+        ];
+
+        localStorage.setItem('products', JSON.stringify(products));
+    </script>
+
+    <script>
+      // Render products
+      function renderProducts() {
+            const productList = document.getElementById('product-list');
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product', 'text-center', 'col-lg-3', 'col-md-4', 'col-12');
+                productElement.innerHTML = `
+                    <img class="img-fluid mb-3" src="${product.image}" alt="">
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="p-name">${product.name}</h5>
+                    <h4 class="p-price">${product.price}</h4>
+                    <button class="buy-btn">Buy Now</button>
+                `;
+                productList.appendChild(productElement);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderProducts);
     </script>
 
 </html>

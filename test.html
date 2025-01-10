@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+		<script src="https://unpkg.com/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
+	</head>
+
+	<body class="bg-gray-100 text-gray-900 px-4 py-8">
+		<div class="container mx-auto" x-data="getUsers()">
+			<input
+				x-ref="searchInput"
+				x-model="search"
+				x-on:keydown.window.prevent.slash="$refs.searchInput.focus()"
+				placeholder="Search for a user..."
+				type="search"
+				class="block w-full rounded bg-gray-200 p-4 mb-4"
+			/>
+			<div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+				<template x-for="user in filteredUsers" :key="user.id">
+					<div class="flex items-center shadow p-4">
+						<img class="rounded-full w-12 h-12" :src="user.image" />
+						<div class="ml-4">
+							<p class="text-lg text-gray-900" x-text="user.name"></p>
+							<p class="text-sm font-bold text-gray-600" x-text="user.age"></p>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
+		<script>
+			function getUsers() {
+				return {
+					search: '',
+					allData: userData,
+					get filteredUsers() {
+						if (this.search === '') {
+							return this.allData;
+						}
+						return this.allData.filter((user) => {
+							return user.name
+								.replace(/ /g, '')
+								.toLowerCase()
+								.includes(this.search.replace(/ /g, '').toLowerCase());
+						});
+					}
+				};
+			}
+
+			const userData = [
+				{
+					id: 1,
+					name: 'Joe',
+					age: 20,
+					image: 'https://randomuser.me/api/portraits/men/1.jpg'
+				},
+				{
+					id: 2,
+					name: 'Sally',
+					age: 25,
+					image: 'https://randomuser.me/api/portraits/women/1.jpg'
+				},
+				{
+					id: 3,
+					name: 'Tom',
+					age: 30,
+					image: 'https://randomuser.me/api/portraits/men/2.jpg'
+				},
+				{
+					id: 4,
+					name: 'John',
+					age: 35,
+					image: 'https://randomuser.me/api/portraits/men/3.jpg'
+				},
+				{
+					id: 5,
+					name: 'Samantha',
+					age: 40,
+					image: 'https://randomuser.me/api/portraits/women/2.jpg'
+				}
+			];
+		</script>
+	</body>
+</html>
