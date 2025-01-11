@@ -52,7 +52,7 @@
                   </li>
               </div>
             </div>
-          </nav>
+        </nav>
 
         <section id="home">
           <div class="container">
@@ -100,7 +100,7 @@
           </div>
         </section>
 
-        <!-- feature item -->
+        <!-- featured product -->
         <section id="featured" class="my-5 pb-5">
           <div class="container text-center mt-5 py-2">
             <h3>Our Featured</h3>
@@ -108,7 +108,7 @@
             <p>Here you can check out our new products with fair price on rymo.</p>
           </div>
           <div id="featuredProducts" class="row mx-auto container-fluid">
-            <!-- Products will be inserted dynamically here -->
+            <!-- Products will be display here -->
           </div>
         </section>
 
@@ -120,7 +120,7 @@
           </div>
         </section>
 
-        <!-- clothes item -->
+        <!-- clothes product -->
         <section id="clothes" class="my-5 pb-5">
           <div class="container text-center mt-5 py-2">
             <h3>Our Clothes</h3>
@@ -128,11 +128,11 @@
             <p>Here you can check out our new products with fair price on rymo.</p>
           </div>
           <div id="featuredClothes" class="row mx-auto container-fluid">
-            <!-- Products will be inserted dynamically here -->
+            <!-- Products will be display here -->
           </div>
         </section>
 
-        <!-- watch item -->
+        <!-- watch product -->
         <section id="watches" class="my-5 pb-5">
           <div class="container text-center mt-5 py-2">
             <h3>Our Watches</h3>
@@ -140,11 +140,11 @@
             <p>Here you can check out our new products with fair price on rymo.</p>
           </div>
           <div id="featuredWatches" class="row mx-auto container-fluid">
-            <!-- Products will be inserted dynamically here -->
+            <!-- Products will be display here -->
           </div>
         </section>
 
-        <!-- shoes item -->
+        <!-- shoes product -->
         <section id="shoes" class="my-5 pb-5">
           <div class="container text-center mt-5 py-2">
             <h3>Our Shoes</h3>
@@ -152,10 +152,9 @@
             <p>Here you can check out our new products with fair price on rymo.</p>
           </div>
           <div id="featuredShoes" class="row mx-auto container-fluid">
-            <!-- Products will be inserted dynamically here -->
+            <!-- Products will be display here -->
           </div>
         </section>
-
 
 
         <footer class="mt-5 py-5">
@@ -234,9 +233,11 @@
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" 
             crossorigin="anonymous"></script>
 
+
+        
+        <!-- Render products for each category -->
         <script>
           document.addEventListener("DOMContentLoaded", () => {
-            // Render products for each category
           renderProducts('featured', 'featuredProducts');
           renderProducts('clothes', 'featuredClothes');
           renderProducts('watches', 'featuredWatches');
