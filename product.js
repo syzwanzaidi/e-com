@@ -50,7 +50,61 @@ if (!localStorage.getItem('products')) {
       productContainer.insertAdjacentHTML('beforeend', productHTML);
     });
   }
-  
+
+  // Function to render all products
+  function renderAllProducts(containerId) {
+    const productContainer = document.getElementById(containerId);
+    if (!productContainer) return; // Exit if container is not found
+
+    Object.keys(products).forEach(category => {
+        products[category].forEach((product, index) => {
+            const stars = Array(product.rating).fill('<i class="fas fa-star"></i>').join('');
+            const productHTML = `
+                <div class="product text-center col-lg-3 col-md-4 col-12">
+                    <img class="img-fluid mb-3" src="${product.image}" alt="${product.name}">
+                    <div class="star">${stars}</div>
+                    <h5 class="p-name">${product.name}</h5>
+                    <h4 class="p-price">${product.price}</h4>
+                    <button class="buy-btn" onclick="viewProductDetails('${category}', ${index})">Buy Now</button>
+                </div>
+            `;
+            productContainer.insertAdjacentHTML('beforeend', productHTML);
+        });
+    });
+}
+
+
+// Function to filter and render products based on search query
+function filterAndRenderProducts(containerId, searchQuery) {
+  const productContainer = document.getElementById(containerId);
+  if (!productContainer) return;
+
+  // Clear the container
+  productContainer.innerHTML = '';
+
+  // Filter and render products
+  Object.keys(products).forEach(category => {
+      products[category]
+          .filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+          .forEach((product, index) => {
+              const stars = Array(product.rating).fill('<i class="fas fa-star"></i>').join('');
+              const productHTML = `
+                  <div class="product text-center col-lg-3 col-md-4 col-12">
+                      <img class="img-fluid mb-3" src="${product.image}" alt="${product.name}">
+                      <div class="star">${stars}</div>
+                      <h5 class="p-name">${product.name}</h5>
+                      <h4 class="p-price">${product.price}</h4>
+                      <button class="buy-btn" onclick="viewProductDetails('${category}', ${index})">Buy Now</button>
+                  </div>
+              `;
+              productContainer.insertAdjacentHTML('beforeend', productHTML);
+          });
+  });
+}
+
+
+
+
   // Handle "Buy Now" button click
   function viewProductDetails(category, index) {
     const selectedProduct = products[category][index];

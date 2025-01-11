@@ -36,6 +36,17 @@
             .pagination a{
                 color: black;
             }
+
+            .btn {
+                background-color: coral;
+                color: white;
+            }
+
+            .btn:hover {
+                background-color: black;
+                color: white;
+            }
+
         </style>
 
     </head>
@@ -68,12 +79,37 @@
 
                   <li class="nav-item">
                     <!-- Search form -->
-                    <div x-data="{ open: false, search: '' }" class="d-flex ml-auto align-items-center search-container">
+                    <!-- <div x-data="{ open: false, search: '' }" class="d-flex ml-auto align-items-center search-container">
                       <i @click="open = !open" class="fal fa-search" style="cursor: pointer;"></i>
                       <div x-show="open" class="search-popup ml-2" x-transition.duration.500ms>
                           <input x-model="search" type="text" class="form-control mt-2" placeholder="Search...">
                           <button @click="performSearch" class="btn mt-1">Search</button>
                       </div>
+                    </div> -->
+
+                    <!-- Search Bar with Toggle -->
+                    <div x-data="{
+                        open: false,
+                        searchQuery: '',
+                        toggleSearch() {
+                            this.open = !this.open;
+                            if (!this.open) this.searchQuery = ''; // Reset search query when closed
+                        },
+                        updateSearch() {
+                            filterAndRenderProducts('allProductsContainer', this.searchQuery);
+                        }
+                    }" class="d-flex ml-auto align-items-center search-container">
+                        <i @click="toggleSearch" class="fal fa-search" style="cursor: pointer;"></i>
+                        <div x-show="open" class="search-popup ml-2" x-transition.duration.500ms>
+                            <input 
+                                x-model="searchQuery" 
+                                @input="updateSearch" 
+                                type="text" 
+                                class="form-control mt-2" 
+                                placeholder="Search..."
+                                style="width: 300px;">
+                            <!-- <button @click="toggleSearch" class="btn btn-primary mt-1">Close</button> -->
+                        </div>
                     </div>
                   </li>
 
@@ -85,42 +121,37 @@
             </div>
           </nav>
 
-          <section id="featured" class="my-5 py-5" x-data="productSearch()">
-            <div class="container mt-5 py-5">
-              <h2 class="font-weight-bold">Our Featured</h2>
-              <hr>
-              <p>Here you can check out our new products with fair price on rymo.</p>
-            </div>
 
-            <section id="featured" class="my-5 pb-5">
-              <div id="featuredProducts" class="row mx-auto container-fluid">
-                <!-- Products will be inserted dynamically here -->
+            <section id="featured" class="my-5 py-5" x-data="productSearch()">
+              <div class="container mt-5 py-5">
+                <h2 class="font-weight-bold">Our Featured</h2>
+                <hr>
+                <p>Here you can check out our new products with fair price on rymo.</p>
               </div>
-            </section>
 
-            <!-- clothes item -->
-            <section id="clothes" class="my-5 pb-5">
-              <div id="featuredClothes" class="row mx-auto container-fluid">
-                <!-- Products will be inserted dynamically here -->
-              </div>
-            </section>
+              <!-- Search Bar -->
+            <!-- <div x-data="{
+                searchQuery: '',
+                updateSearch() {
+                    filterAndRenderProducts('allProductsContainer', this.searchQuery);
+                }
+            }">
+                <input type="text" x-model="searchQuery" @input="updateSearch" class="form-control mb-4" placeholder="Search for products...">
+            </div> -->
 
-            <!-- watch item -->
-            <section id="watches" class="my-5 pb-5">
-              <div id="featuredWatches" class="row mx-auto container-fluid">
-                <!-- Products will be inserted dynamically here -->
-              </div>
-            </section>
 
-            <!-- shoes item -->
-            <section id="shoes" class="my-5 pb-5">
-              <div id="featuredShoes" class="row mx-auto container-fluid">
-                <!-- Products will be inserted dynamically here -->
+            
+
+  
+              <section id="featured" class="my-5 pb-5">
+                <div class="row mx-auto container" id="allProductsContainer">
+                  <!-- Products will be dynamically generated here -->
               </div>
+              </section>
             </section>
 
 
-              <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <!-- Previous Page Button -->
                   <li class="page-item" id="prevPage">
@@ -128,7 +159,7 @@
                   </li>
               
                   <!-- Page 1 -->
-                  <li class="page-item" id="page1">
+                  <li class="page-item active" id="page1">
                       <a class="page-link" href="shop1.html">1</a>
                   </li>
               
@@ -232,14 +263,65 @@
         <script src="./product.js" defer></script>
     </body>
 
+    <!--Page navigation logic-->
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Render products for each category
-      renderProducts('featured', 'featuredProducts');
-      renderProducts('clothes', 'featuredClothes');
-      renderProducts('watches', 'featuredWatches');
-      renderProducts('shoes', 'featuredShoes');
-      });
+        // Set the current page number in localStorage
+        localStorage.setItem('currentPage', 1);
+
+        // Get the current page number from localStorage
+        const currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
+
+        console.log(`Current Page: ${currentPage}`);
+
+        // Remove the active class from all pagination items
+        document.querySelectorAll('.pagination .page-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Update the active page number
+        const activePageElement = document.getElementById(`page${currentPage}`);
+        if (activePageElement) {
+            activePageElement.classList.add('active');
+        } else {
+            console.error(`Element with ID page${currentPage} not found.`);
+        }
+
+        // Update the previous and next page links
+        const prevPageLink = document.getElementById('prevPage').querySelector('a');
+        const nextPageLink = document.getElementById('nextPage').querySelector('a');
+
+        prevPageLink.href = `shop${currentPage - 1}.html`;
+        nextPageLink.href = `shop${currentPage + 1}.html`;
+
+        console.log(`Previous Page Link: ${prevPageLink.href}`);
+        console.log(`Next Page Link: ${nextPageLink.href}`);
     </script>
+
+    <script>
+        // // Function to search for products
+        // function productSearch() {
+        //     return {
+        //         search: '',
+        //         performSearch() {
+        //             const searchQuery = this.search.toLowerCase();
+        //             console.log('Searching for:', searchQuery);
+        //             // Implement your search logic here
+        //         },
+        //         matchesSearch(productName) {
+        //             return productName.toLowerCase().includes(this.search.toLowerCase());
+        //         }
+        //     }
+        // }
+
+        document.addEventListener("DOMContentLoaded", () => {
+        // Render all products in the specified container
+        renderAllProducts('allProductsContainer');
+        filterAndRenderProducts('allProductsContainer', '');
+      });
+        
+        
+    </script>
+
+    
 
 </html>
