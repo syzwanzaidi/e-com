@@ -201,89 +201,95 @@
             integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
             crossorigin="anonymous"></script>
 
-            <script>
-              // Fetch the selected product from localStorage
-              const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-            
-              if (selectedProduct) {
-                // Update Main Product Image
-                document.getElementById('MainImg').src = selectedProduct.image;
-            
-                // Update Small Images
-                const smallImgGroup = document.getElementById('smallImgGroup');
-                if (selectedProduct.images && selectedProduct.images.length) {
-                  selectedProduct.images.forEach((imgSrc) => {
-                    const imgCol = document.createElement('div');
-                    imgCol.className = 'small-img-col';
-                    imgCol.innerHTML = `<img src="${imgSrc}" width="100%" class="small-img" alt="Product Image">`;
-                    smallImgGroup.appendChild(imgCol);
-                  });
-                }
-            
-                // Update Breadcrumb
-                document.getElementById('productBreadcrumb').textContent = `Home / ${selectedProduct.category}`;
-            
-                // Update Product Name
-                document.getElementById('productName').textContent = selectedProduct.name;
-            
-                // Update Product Price
-                document.getElementById('productPrice').textContent = selectedProduct.price;
-            
-                // Update Size Selector
-                const sizeSelect = document.getElementById('sizeSelect');
-                selectedProduct.sizes.forEach((size) => {
-                  const option = document.createElement('option');
-                  option.value = size;
-                  option.textContent = size;
-                  sizeSelect.appendChild(option);
-                });
-            
-                // Add event listener for Add to Cart button
-                document.getElementById('addToCartButton').addEventListener('click', () => {
-                  const selectedSize = sizeSelect.value;
-                  const quantity = parseInt(document.getElementById('productQuantity').value, 10);
-            
-                  if (!selectedSize || quantity <= 0) {
-                    alert('Please select a size and a valid quantity.');
-                    return;
-                  }
-            
-                  // Prepare cart item
-                  const cartItem = {
-                    name: selectedProduct.name,
-                    price: selectedProduct.price,
-                    image: selectedProduct.image,
-                    size: selectedSize,
-                    quantity: quantity,
-                  };
-            
-                  // Fetch existing cart from localStorage
-                  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-                  // Check if the product with the same size already exists in the cart
-                  const existingItemIndex = cart.findIndex(
-                    (item) => item.name === cartItem.name && item.size === cartItem.size
-                  );
-            
-                  if (existingItemIndex > -1) {
-                    // Update quantity if item exists
-                    cart[existingItemIndex].quantity += cartItem.quantity;
-                  } else {
-                    // Add new item to cart
-                    cart.push(cartItem);
-                  }
-            
-                  // Save updated cart back to localStorage
-                  localStorage.setItem('cart', JSON.stringify(cart));
-            
-                  alert(`Added ${cartItem.name} (Size: ${cartItem.size}, Quantity: ${cartItem.quantity}) to cart!`);
-                });
-              } else {
-                document.body.innerHTML = '<h1>Product not found</h1>';
+        <script>
+          // Fetch the selected product from localStorage
+          const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+        
+          if (selectedProduct) {
+            // Update Main Product Image
+            document.getElementById('MainImg').src = selectedProduct.image;
+        
+            // Update Small Images
+            const smallImgGroup = document.getElementById('smallImgGroup');
+            if (selectedProduct.images && selectedProduct.images.length) {
+              selectedProduct.images.forEach((imgSrc) => {
+                const imgCol = document.createElement('div');
+                imgCol.className = 'small-img-col';
+                imgCol.innerHTML = `<img src="${imgSrc}" width="100%" class="small-img" alt="Product Image">`;
+                smallImgGroup.appendChild(imgCol);
+              });
+            }
+        
+            // Update Breadcrumb
+            document.getElementById('productBreadcrumb').textContent = `Home / ${selectedProduct.category}`;
+        
+            // Update Product Name
+            document.getElementById('productName').textContent = selectedProduct.name;
+        
+            // Update Product Price
+            document.getElementById('productPrice').textContent = selectedProduct.price;
+        
+            // Update Size Selector
+            const sizeSelect = document.getElementById('sizeSelect');
+            selectedProduct.sizes.forEach((size) => {
+              const option = document.createElement('option');
+              option.value = size;
+              option.textContent = size;
+              sizeSelect.appendChild(option);
+            });
+        
+            // Add event listener for Add to Cart button
+            document.getElementById('addToCartButton').addEventListener('click', () => {
+              const selectedSize = sizeSelect.value;
+              const quantity = parseInt(document.getElementById('productQuantity').value, 10);
+        
+              // Check if size is selected
+              if (!selectedSize || selectedSize === "Select Size") {
+                alert('Please select a size before adding the product to the cart.');
+                sizeSelect.focus();
+                return;
               }
-            </script>
-            
-
+        
+              // Check if quantity is valid
+              if (quantity <= 0) {
+                alert('Please enter a valid quantity.');
+                return;
+              }
+        
+              // Prepare cart item
+              const cartItem = {
+                name: selectedProduct.name,
+                price: selectedProduct.price,
+                image: selectedProduct.image,
+                size: selectedSize,
+                quantity: quantity,
+              };
+        
+              // Fetch existing cart from localStorage
+              let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+              // Check if the product with the same size already exists in the cart
+              const existingItemIndex = cart.findIndex(
+                (item) => item.name === cartItem.name && item.size === cartItem.size
+              );
+        
+              if (existingItemIndex > -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += cartItem.quantity;
+              } else {
+                // Add new item to cart
+                cart.push(cartItem);
+              }
+        
+              // Save updated cart back to localStorage
+              localStorage.setItem('cart', JSON.stringify(cart));
+        
+              alert(`Added ${cartItem.name} (Size: ${cartItem.size}, Quantity: ${cartItem.quantity}) to cart!`);
+            });
+          } else {
+            document.body.innerHTML = '<h1>Product not found</h1>';
+          }
+        </script>
     </body>
 
 </html>
