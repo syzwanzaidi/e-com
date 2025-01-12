@@ -2,16 +2,16 @@
 if (!localStorage.getItem('products')) {
     const products = {
         featured: [
-            { image: 'img/featured/1.jpg', category: "Featured", name: 'Adidas Samba', price: 'RM 90.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"] },
-            { image: 'img/featured/2.jpg', category: "Featured", name: 'Sneakers', price: 'RM 100.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
-            { image: 'img/featured/3.jpg', category: "Featured", name: 'Bag', price: 'RM 50.00', rating: 4, sizes : ["10L", "26L", "28L"]},
+            { image: 'img/featured/1.jpg', category: "Featured", name: 'Adidas Samba', price: 'RM 90.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/featured/2.jpg', category: "Featured", name: 'New Balance 2002r', price: 'RM 100.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/featured/3.jpg', category: "Featured", name: 'School Bag', price: 'RM 50.00', rating: 4, sizes : ["10L", "26L", "28L"]},
             { image: 'img/featured/4.jpg', category: "Featured", name: 'Bandana', price: 'RM 90.00', rating: 5, sizes : ["S", "M"]},
           ],
           clothes: [
-            { image: 'img/clothes/1.jpg', category: "Clothes", name: 'Strippy', price: 'RM 40.00', rating: 5, sizes: ["S", "M", "L", "XL"] },
-            { image: 'img/clothes/2.jpg', category: "Clothes", name: 'Blouse', price: 'RM 50.00', rating: 4, sizes: ["S", "M", "L", "XL"] },
-            { image: 'img/clothes/3.jpg', category: "Clothes", name: 'T-shirt', price: 'RM 60.00', rating: 3, sizes: ["S", "M", "L", "XL"]},
-            { image: 'img/clothes/2.jpg', category: "Clothes", name: 'Strippy', price: 'RM 40.00', rating: 5, sizes: ["S", "M", "L", "XL"]},
+            { image: 'img/shop/24.jpg', category: "Clothes", name: 'White T-shirt', price: 'RM 40.00', rating: 5, sizes: ["S", "M", "L", "XL"] },
+            { image: 'img/shop/25.jpg', category: "Clothes", name: 'Maroon T-shirt', price: 'RM 50.00', rating: 4, sizes: ["S", "M", "L", "XL"] },
+            { image: 'img/shop/1.jpg', category: "Clothes", name: 'Blue T-shirt', price: 'RM 60.00', rating: 3, sizes: ["S", "M", "L", "XL"]},
+            { image: 'img/shop/26.jpg', category: "Clothes", name: 'Green T-shirt', price: 'RM 40.00', rating: 5, sizes: ["S", "M", "L", "XL"]},
           ],
           watches: [
             { image: 'img/watches/1.jpg', category: "Watches", name: 'Tag Heuer', price: 'RM 568.00', rating: 5, sizes : ["38mm", "40mm", "42mm", "45mm"] },
@@ -20,11 +20,23 @@ if (!localStorage.getItem('products')) {
             { image: 'img/watches/4.jpg', category: "Watches", name: 'G-Shock', price: 'RM 782.00', rating: 5, sizes : ["38mm", "40mm", "42mm", "45mm"]  },
           ],
           shoes: [
-            { image: 'img/shoes/1.jpg', category: "Shoes", name: 'Adidas', price: 'RM 700.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
-            { image: 'img/shoes/2.jpg', category: "Shoes", name: 'AJ4', price: 'RM 458.00', rating: 3, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
-            { image: 'img/shoes/3.jpg', category: "Shoes", name: 'Nike', price: 'RM 302.00', rating: 2, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
-            { image: 'img/shoes/4.jpg', category: "Shoes", name: 'Puma', price: 'RM 150.00', rating: 4, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/shoes/1.jpg', category: "Shoes", name: 'Adidas Ultraboost', price: 'RM 700.00', rating: 5, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/shoes/2.jpg', category: "Shoes", name: 'Nike AJ4', price: 'RM 458.00', rating: 3, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/shoes/3.jpg', category: "Shoes", name: 'Nike Running', price: 'RM 302.00', rating: 2, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
+            { image: 'img/shoes/4.jpg', category: "Shoes", name: 'Puma Suede', price: 'RM 150.00', rating: 4, sizes : ["5UK", "6UK", "7UK", "8UK", "9UK"]},
           ],
+          shirts: [
+            { image: 'img/shop/1.jpg', category: "shirts", name: 'Plain T-shirt', price: 'RM 700.00', rating: 5, sizes : ["S", "M", "L", "XL"]},
+            { image: 'img/shop/6.jpg', category: "shirts", name: 'Winter Jacket', price: 'RM 458.00', rating: 3, sizes : ["S", "M", "L", "XL"]},
+            { image: 'img/shop/8.jpg', category: "shirts", name: 'Windbraker', price: 'RM 302.00', rating: 2, sizes : ["S", "M", "L", "XL"]},
+            { image: 'img/shop/23.jpg', category: "shirts", name: 'Casual Shirt', price: 'RM 150.00', rating: 4, sizes : ["S", "M", "L", "XL"]},
+          ],
+          others: [
+            { image: 'img/shop/15.jpg', category: "others", name: 'Converse Beanie', price: 'RM 700.00', rating: 5, sizes : ["S", "M"]},
+            { image: 'img/shop/11.jpg', category: "others", name: 'Cowboy Hat', price: 'RM 458.00', rating: 3, sizes : ["S", "M"]},
+            { image: 'img/shop/4.jpg', category: "others", name: 'Nike Marina Blue', price: 'RM 302.00', rating: 2, sizes : ["10L", "26L", "28L"]},
+            { image: 'img/shop/9.jpg', category: "others", name: 'Strip Bag', price: 'RM 150.00', rating: 4, sizes : ["10L", "26L", "28L"]},
+          ]
     };
     localStorage.setItem('products', JSON.stringify(products));
   }
