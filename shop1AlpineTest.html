@@ -37,16 +37,6 @@
                 color: black;
             }
 
-            .btn {
-                background-color: coral;
-                color: white;
-            }
-
-            .btn:hover {
-                background-color: black;
-                color: white;
-            }
-
         </style>
 
     </head>
@@ -78,15 +68,6 @@
                   </li>
 
                   <li class="nav-item">
-                    <!-- Search form -->
-                    <!-- <div x-data="{ open: false, search: '' }" class="d-flex ml-auto align-items-center search-container">
-                      <i @click="open = !open" class="fal fa-search" style="cursor: pointer;"></i>
-                      <div x-show="open" class="search-popup ml-2" x-transition.duration.500ms>
-                          <input x-model="search" type="text" class="form-control mt-2" placeholder="Search...">
-                          <button @click="performSearch" class="btn mt-1">Search</button>
-                      </div>
-                    </div> -->
-
                     <!-- Search Bar with Toggle -->
                     <div x-data="{
                         open: false,
@@ -108,7 +89,6 @@
                                 class="form-control mt-2" 
                                 placeholder="Search..."
                                 style="width: 300px;">
-                            <!-- <button @click="toggleSearch" class="btn btn-primary mt-1">Close</button> -->
                         </div>
                     </div>
                   </li>
@@ -129,20 +109,7 @@
                 <p>Here you can check out our new products with fair price on rymo.</p>
               </div>
 
-              <!-- Search Bar -->
-            <!-- <div x-data="{
-                searchQuery: '',
-                updateSearch() {
-                    filterAndRenderProducts('allProductsContainer', this.searchQuery);
-                }
-            }">
-                <input type="text" x-model="searchQuery" @input="updateSearch" class="form-control mb-4" placeholder="Search for products...">
-            </div> -->
-
-
-            
-
-  
+              
               <section id="featured" class="my-5 pb-5">
                 <div class="row mx-auto container" id="allProductsContainer">
                   <!-- Products will be dynamically generated here -->
